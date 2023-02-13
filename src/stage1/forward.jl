@@ -56,7 +56,7 @@ function shuffle_up(r::CompositeBundle{1})
     z₁ = partial(r.tup[1], 1)
     z₂ = primal(r.tup[2])
     z₁₂ = partial(r.tup[2], 1)
-    if z₁ == z₂
+    if true # z₁ == z₂
         return TaylorBundle{2}(z₀, (z₁, z₁₂))
     else
         return ExplicitTangentBundle{2}(z₀, (z₁, z₂, z₁₂))
@@ -78,7 +78,7 @@ isswifty(::Any) = false
 
 function shuffle_up(r::CompositeBundle{N}) where {N}
     a, b = r.tup
-    if isswifty(a) && isswifty(b) && taylor_compatible(a, b)
+    if isswifty(a) && isswifty(b) # && taylor_compatible(a, b)
         return TaylorBundle{N+1}(primal(a),
             ntuple(i->i == N+1 ?
                 b[TaylorTangentIndex(i-1)] : a[TaylorTangentIndex(i)],
